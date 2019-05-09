@@ -25,18 +25,18 @@ public class PhotosAdministrationService {
      * @return
      */
     public PhotoPublication addPhotoFlickr(PhotoPublication newPhotoPublication){
-        return photosFlickrRepository.save(newPhotoPublication);
+        return this.photosFlickrRepository.save(newPhotoPublication);
     }
 
     /**
      *
      * @param updatedPhotoPublication
-     * @param id
+     * @param day
      * @return
      * @throws PhotoPublicationException
      */
-    public PhotoPublication updatePhoto(PhotoPublication updatedPhotoPublication, Long id) throws PhotoPublicationException {
-        return this.photosFlickrRepository.findById(id)
+    public PhotoPublication updatePhoto(PhotoPublication updatedPhotoPublication, Date day) throws PhotoPublicationException {
+        return this.photosFlickrRepository.findById(day)
                 .map(photoFlickr -> {
                     photoFlickr.setTitle(updatedPhotoPublication.getTitle());
                     photoFlickr.setDayPublication(updatedPhotoPublication.getDayPublication());
@@ -45,15 +45,15 @@ public class PhotosAdministrationService {
                     photoFlickr.setUrlFlickrSmall(updatedPhotoPublication.getUrlFlickrSmall());
                     photoFlickr.setUrlFlickrLarge(updatedPhotoPublication.getUrlFlickrLarge());
                     return this.photosFlickrRepository.save(photoFlickr);
-                }).orElseThrow(() -> new PhotoPublicationException("Any photoFlickr exists with the id : " + id.toString()));
+                }).orElseThrow(() -> new PhotoPublicationException("Any photoFlickr exists with the id : " + day));
     }
 
     /**
      *
-     * @param id
+     * @param day
      */
-    public void deletePhoto(Long id){
-       this.photosFlickrRepository.deleteById(id);
+    public void deletePhoto(Date day){
+       this.photosFlickrRepository.deleteById(day);
     }
 
 

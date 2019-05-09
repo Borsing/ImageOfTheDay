@@ -6,6 +6,7 @@ import imageday.exceptions.PhotoPublicationException;
 import imageday.services.FlickrService;
 import imageday.services.PhotosAdministrationService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Date;
@@ -37,14 +38,14 @@ public class PhotosFlickrAdministrationController {
     }
 
 
-    @PutMapping("/{id}")
-    public PhotoPublication updatePhotoFlickr(@RequestBody PhotoPublication updatedPhotoPublication, @PathVariable Long id) throws PhotoPublicationException {
-        return this.photosAdministrationService.updatePhoto(updatedPhotoPublication,id);
+    @PutMapping("/{day}")
+    public PhotoPublication updatePhotoFlickr(@RequestBody PhotoPublication updatedPhotoPublication, @PathVariable @DateTimeFormat(iso= DateTimeFormat.ISO.DATE, pattern = "dd-MM-yyyy") Date day) throws PhotoPublicationException {
+        return this.photosAdministrationService.updatePhoto(updatedPhotoPublication,day);
     }
 
-    @DeleteMapping("/{id}")
-    public void deletePhotoFlickr(@PathVariable Long id) {
-        this.photosAdministrationService.deletePhoto(id);
+    @DeleteMapping("/{day}")
+    public void deletePhotoFlickr(@PathVariable @DateTimeFormat(iso= DateTimeFormat.ISO.DATE, pattern = "dd-MM-yyyy") Date day) {
+        this.photosAdministrationService.deletePhoto(day);
     }
 
 }

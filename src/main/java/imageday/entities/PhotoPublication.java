@@ -13,9 +13,6 @@ import java.util.Date;
 public class PhotoPublication {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private long id;
-
     @Temporal(TemporalType.DATE)
     @JsonFormat(pattern = "dd-MM-yyyy")
     @NotNull

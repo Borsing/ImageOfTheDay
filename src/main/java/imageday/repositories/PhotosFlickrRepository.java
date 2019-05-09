@@ -9,7 +9,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface PhotosFlickrRepository extends PagingAndSortingRepository<PhotoPublication, Long> {
+public interface PhotosFlickrRepository extends PagingAndSortingRepository<PhotoPublication, Date> {
 
     PhotoPublication findByDayPublication(@Param("dayPublication")Date photoOfTheDay);
 

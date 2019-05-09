@@ -1,5 +1,6 @@
 package imageday.services;
 
+import imageday.exceptions.PhotoPublicationException;
 import imageday.repositories.PhotosFlickrRepository;
 import imageday.entities.PhotoPublication;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,10 @@ public class PhotosService {
 
     public PhotoPublication findPhotoOfTheDay(){
         return photosFlickrRepository.findByDayPublication(new Date());
+    }
+
+    public PhotoPublication findPhotoByDay(Date day) throws PhotoPublicationException {
+        return photosFlickrRepository.findById(day).orElseThrow(() -> new PhotoPublicationException("No image for the day : " + day));
     }
 
     public List<PhotoPublication> findPreviousPhotosOfTheDay(){
