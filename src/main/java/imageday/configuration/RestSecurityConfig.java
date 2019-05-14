@@ -1,6 +1,7 @@
-package imageday.security;
+package imageday.configuration;
 
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -17,6 +18,14 @@ import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 @Configuration
 @EnableWebSecurity
 public class RestSecurityConfig extends WebSecurityConfigurerAdapter {
+
+    private final ConfigurationService configurationService ;
+
+    @Autowired
+    RestSecurityConfig(ConfigurationService configurationService){
+        this.configurationService = configurationService ;
+    }
+
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
@@ -40,7 +49,11 @@ public class RestSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     public UserDetailsService userDetailsService() {
         UserDetails user =
-                User.withUsername("admin").password(encoder().encode("password")).roles("ADMIN").build();
+                User.withUsername(configurationService.getAdminUsername())
+                        .password(encoder().encode(
+                                configurationService.getAdminPassword()))
+                        .roles("ADMIN")
+                        .build();
 
         return new InMemoryUserDetailsManager(user);
     }

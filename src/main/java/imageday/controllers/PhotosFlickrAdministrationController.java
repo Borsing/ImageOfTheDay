@@ -15,11 +15,15 @@ import java.util.Date;
 @RequestMapping(value = "/photos/admin")
 public class PhotosFlickrAdministrationController {
 
-    @Autowired
-    PhotosAdministrationService photosAdministrationService;
+    private final PhotosAdministrationService photosAdministrationService;
+
+    private final FlickrService flickrService;
 
     @Autowired
-    FlickrService flickrService;
+    PhotosFlickrAdministrationController(PhotosAdministrationService photosAdministrationService, FlickrService flickrService) {
+        this.photosAdministrationService = photosAdministrationService ;
+        this.flickrService = flickrService ;
+    }
 
     @PostMapping(value = "/", consumes = "application/json")
     public PhotoPublication addPhotoFlickr(@RequestBody PhotoPublication newPhotoPublication){

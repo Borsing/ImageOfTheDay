@@ -15,8 +15,12 @@ import java.util.List;
 @RequestMapping(value = "/photos")
 public class PhotosFlickrController {
 
+    private final PhotosService photosService;
+
     @Autowired
-    PhotosService photosService;
+    PhotosFlickrController(PhotosService photosService){
+        this.photosService = photosService ;
+    }
 
     @GetMapping("/")
     public Iterable<PhotoPublication> findAll(){

@@ -16,8 +16,12 @@ import java.util.stream.Collectors;
 @Service
 public class PhotosAdministrationService {
 
+    private final PhotosFlickrRepository photosFlickrRepository ;
+
     @Autowired
-    PhotosFlickrRepository photosFlickrRepository ;
+    PhotosAdministrationService(PhotosFlickrRepository photosFlickrRepository ){
+        this.photosFlickrRepository = photosFlickrRepository;
+    }
 
     /**
      *

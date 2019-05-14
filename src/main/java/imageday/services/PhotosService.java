@@ -12,8 +12,12 @@ import java.util.List;
 @Service
 public class PhotosService {
 
+    private final PhotosFlickrRepository photosFlickrRepository ;
+
     @Autowired
-    PhotosFlickrRepository photosFlickrRepository ;
+    PhotosService(PhotosFlickrRepository photosFlickrRepository){
+        this.photosFlickrRepository = photosFlickrRepository ;
+    }
 
     public Iterable<PhotoPublication> getAllPhotos(){
         return photosFlickrRepository.findAll();

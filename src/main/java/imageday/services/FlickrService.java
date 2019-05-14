@@ -4,7 +4,9 @@ import com.flickr4java.flickr.FlickrException;
 import com.flickr4java.flickr.REST;
 import com.flickr4java.flickr.favorites.FavoritesInterface;
 import com.flickr4java.flickr.photos.Photo;
+import imageday.configuration.ConfigurationService;
 import imageday.entities.PhotoPublication;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.*;
@@ -13,12 +15,15 @@ import java.util.stream.Collectors;
 @Service
 public class FlickrService {
 
-    private final String apiKey = "9a4794f8dcebfc24e6050c909fbb6ba0";
-    private final String sharedSecret = "778afac6bc65bcf1";
-    private final String userId = "161473432@N05";
-    private final int maxPerPage = 500 ; //from Flickr API
+    private final ConfigurationService configurationService ;
 
-    private FavoritesInterface favoritesInterface = new FavoritesInterface(apiKey,sharedSecret, new REST());
+    private final FavoritesInterface favoritesInterface ;
+
+    @Autowired
+    FlickrService(ConfigurationService configurationService){
+        this.configurationService = configurationService ;
+        this.favoritesInterface  = new FavoritesInterface(configurationService.getFlickrApiKey(), configurationService.getFlickrSharedSecret(), new REST());
+    }
 
     private Set<String> getExtraData(){
         String extraDataTab[] = {"description", "owner_name"};
@@ -53,8 +58,8 @@ public class FlickrService {
 
         List<Photo> allfavorites = new ArrayList<>();
 
-        for(int page = 0; allfavorites.size() == page*maxPerPage; page++) {
-            allfavorites.addAll( this.favoritesInterface.getList(userId, maxPerPage, page, extraData));
+        for(int page = 0; allfavorites.size() == page*configurationService.getFlickrMaxPerPage(); page++) {
+            allfavorites.addAll( this.favoritesInterface.getList(configurationService.getFlickrUserId(), configurationService.getFlickrMaxPerPage(), page, extraData));
         }
 
         return allfavorites ;
