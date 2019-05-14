@@ -17,7 +17,7 @@ public class FlickrAPITest {
     private final String sharedSecret = "778afac6bc65bcf1";
     private final String UserId = "161473432@N05";
 
-    @Test
+    /*@Test
     public void searchFavorite() throws FlickrException {
         Flickr f = new Flickr(apiKey, sharedSecret, new REST());
         FavoritesInterface favoritesInterface = f.getFavoritesInterface();
@@ -39,10 +39,10 @@ public class FlickrAPITest {
             System.out.println(String.format("Large Photo URL: %s", p.getLargeUrl()));
             System.out.println(String.format("Small Photo URL: %s\n", p.getSmallUrl()));
         });
-    }
-
+    }*/
+    /*
     @Test
     public void test() {
 
-    }
+    }*/
 }
